@@ -1,6 +1,6 @@
 """Unit tests for TodoList API endpoints."""
 
-from typing import Generator
+from collections.abc import Generator
 from unittest.mock import MagicMock
 
 import pytest
@@ -44,9 +44,7 @@ def client() -> TestClient:
 class TestIndex:
     """Tests for GET /api/todolists endpoint."""
 
-    def test_returns_all_todo_lists(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_returns_all_todo_lists(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that index returns all todo lists."""
         # Arrange
         expected_todos = [
@@ -86,9 +84,7 @@ class TestIndex:
 class TestShow:
     """Tests for GET /api/todolists/{id} endpoint."""
 
-    def test_returns_todo_list_by_id(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_returns_todo_list_by_id(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that show returns a specific todo list."""
         # Arrange
         expected_todo = TodoList(id=1, name="Test list")
@@ -103,9 +99,7 @@ class TestShow:
         assert response.json()["name"] == "Test list"
         mock_service.get.assert_called_once_with(1)
 
-    def test_returns_404_when_not_found(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_returns_404_when_not_found(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that show returns 404 when todo list doesn't exist."""
         # Arrange
         mock_service.get.return_value = None
@@ -122,9 +116,7 @@ class TestShow:
 class TestCreate:
     """Tests for POST /api/todolists endpoint."""
 
-    def test_creates_new_todo_list(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_creates_new_todo_list(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that create successfully creates a new todo list."""
         # Arrange
         created_todo = TodoList(id=1, name="New list")
@@ -139,9 +131,7 @@ class TestCreate:
         assert response.json()["name"] == "New list"
         mock_service.create.assert_called_once()
 
-    def test_validates_required_fields(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_validates_required_fields(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that create validates required fields."""
         # Act
         response = client.post("/api/todolists", json={})
@@ -150,9 +140,7 @@ class TestCreate:
         assert response.status_code == 422
         mock_service.create.assert_not_called()
 
-    def test_validates_name_not_empty(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_validates_name_not_empty(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that create validates name is not empty."""
         # Act
         response = client.post("/api/todolists", json={"name": ""})
@@ -165,9 +153,7 @@ class TestCreate:
 class TestUpdate:
     """Tests for PUT /api/todolists/{id} endpoint."""
 
-    def test_updates_existing_todo_list(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_updates_existing_todo_list(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that update successfully updates an existing todo list."""
         # Arrange
         updated_todo = TodoList(id=1, name="Updated list")
@@ -182,9 +168,7 @@ class TestUpdate:
         assert response.json()["name"] == "Updated list"
         mock_service.update.assert_called_once()
 
-    def test_returns_404_when_not_found(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_returns_404_when_not_found(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that update returns 404 when todo list doesn't exist."""
         # Arrange
         mock_service.update.return_value = None
@@ -197,9 +181,7 @@ class TestUpdate:
         assert "not found" in response.json()["detail"].lower()
         mock_service.update.assert_called_once()
 
-    def test_validates_required_fields(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_validates_required_fields(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that update validates required fields."""
         # Act
         response = client.put("/api/todolists/1", json={})
@@ -212,9 +194,7 @@ class TestUpdate:
 class TestDelete:
     """Tests for DELETE /api/todolists/{id} endpoint."""
 
-    def test_deletes_existing_todo_list(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_deletes_existing_todo_list(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that delete successfully deletes an existing todo list."""
         # Arrange
         mock_service.delete.return_value = True
@@ -227,9 +207,7 @@ class TestDelete:
         assert response.content == b""
         mock_service.delete.assert_called_once_with(1)
 
-    def test_returns_404_when_not_found(
-        self, client: TestClient, mock_service: MagicMock
-    ) -> None:
+    def test_returns_404_when_not_found(self, client: TestClient, mock_service: MagicMock) -> None:
         """Test that delete returns 404 when todo list doesn't exist."""
         # Arrange
         mock_service.delete.return_value = False

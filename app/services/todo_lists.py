@@ -1,6 +1,6 @@
 """TodoList service with in-memory storage."""
 
-from typing import List, Optional
+from typing import Optional
 
 from app.models import TodoList, TodoListCreate, TodoListUpdate
 
@@ -10,10 +10,10 @@ class TodoListService:
 
     def __init__(self) -> None:
         """Initialize the service with empty storage."""
-        self._storage: List[TodoList] = []
+        self._storage: list[TodoList] = []
         self._next_id: int = 1
 
-    def all(self) -> List[TodoList]:
+    def all(self) -> list[TodoList]:
         """
         Get all todo lists.
 

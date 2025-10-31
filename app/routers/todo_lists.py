@@ -1,6 +1,6 @@
 """TodoList API router with CRUD endpoints."""
 
-from typing import Annotated, List
+from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -10,10 +10,10 @@ from app.services.todo_lists import TodoListService, get_todo_list_service
 router = APIRouter(prefix="/api/todolists", tags=["todolists"])
 
 
-@router.get("", response_model=List[TodoList], status_code=status.HTTP_200_OK)
+@router.get("", response_model=list[TodoList], status_code=status.HTTP_200_OK)
 async def index(
     service: Annotated[TodoListService, Depends(get_todo_list_service)],
-) -> List[TodoList]:
+) -> list[TodoList]:
     """
     Get all todo lists.
 
