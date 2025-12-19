@@ -437,21 +437,25 @@ Returns a simple message indicating the API is running.
 
 ### Todo Lists Endpoints
 
-GET    /api/todolists              # Get all todo lists
-GET    /api/todolists/{id}         # Get a specific todo list
-POST   /api/todolists              # Create a new todo list
-PUT    /api/todolists/{id}         # Update a todo list
-DELETE /api/todolists/{id}         # Delete a todo list
+```http
+GET    /api/todolists          # Get all todo lists
+GET    /api/todolists/{id}     # Get a specific todo list
+POST   /api/todolists          # Create a new todo list
+PUT    /api/todolists/{id}     # Update a todo list
+DELETE /api/todolists/{id}     # Delete a todo list
+```
 
 ### Todo Items Endpoints
 
-GET    /api/todolists/{list_id}/items              # Get all items in a list
-GET    /api/todolists/{list_id}/items/{item_id}   # Get a specific item
-POST   /api/todolists/{list_id}/items             # Create a new item
-PUT    /api/todolists/{list_id}/items/{item_id}   # Update an item
-PATCH  /api/todolists/{list_id}/items/{item_id}/toggle  # Toggle item completion
-DELETE /api/todolists/{list_id}/items/{item_id}   # Delete an item
-POST   /api/todolists/{list_id}/items/complete-all    # Complete all items (async)
+```http
+GET    /api/todolists/{list_id}/items                     # Get all items in a list
+GET    /api/todolists/{list_id}/items/{item_id}          # Get a specific item
+POST   /api/todolists/{list_id}/items                    # Create a new item
+PUT    /api/todolists/{list_id}/items/{item_id}          # Update an item
+PATCH  /api/todolists/{list_id}/items/{item_id}/toggle   # Toggle item completion
+DELETE /api/todolists/{list_id}/items/{item_id}          # Delete an item
+POST   /api/todolists/{list_id}/items/complete-all       # Complete all items (async)
+```
 
 ### Job Status Endpoints
 
@@ -964,3 +968,4 @@ POST /api/todolists/1/items/complete-all
 
 
 Your backend is now ready to serve the React frontend! 🚀
+
