@@ -350,17 +350,18 @@ services:
 
 ## Project Structure
 
+```bash
 app/
 ├── routers/                 # API route handlers
-│   ├── init.py
+│   ├── __init__.py
 │   ├── jobs.py             # Job status endpoints
 │   ├── todo_items.py       # Todo items CRUD endpoints
 │   └── todo_lists.py       # Todo lists CRUD endpoints
 ├── services/               # Business logic layer
-│   ├── init.py
+│   ├── __init__.py
 │   ├── todo_items.py       # Todo items service
 │   └── todo_lists.py       # Todo lists service (Redis storage)
-├── init.py
+├── __init__.py
 ├── main.py                 # FastAPI application entry point
 ├── models.py               # Pydantic models for validation
 ├── redis_config.py         # Redis connection and queue setup
@@ -368,7 +369,7 @@ app/
 scripts/
 └── start_worker.py         # Helper script to start worker
 tests/
-├── init.py
+├── __init__.py
 ├── test_todo_items.py      # Tests for todo items
 └── test_todo_lists.py      # Tests for todo lists
 
@@ -381,6 +382,7 @@ Configuration Files:
 ├── mypy.ini                # MyPy type checker configuration
 ├── .gitignore              # Git ignore rules
 └── README.md               # Project documentation
+```
 
 ## Running the Application
 
@@ -959,5 +961,6 @@ POST /api/todolists/1/items/complete-all
 3. **Start Worker:** `poetry run python -m app.worker`
 4. **Visit:** http://localhost:8000/docs
 5. **Run Tests:** `poetry run pytest`
+
 
 Your backend is now ready to serve the React frontend! 🚀
