@@ -57,15 +57,14 @@ async def create(
 ) -> TodoList:
     """
     Create a new todo list.
-
-    Args:
-        todo_list_data: Data for creating the todo list
-        service: Injected TodoListService instance
-
-    Returns:
-        The newly created TodoList object
     """
-    return service.create(todo_list_data)
+    try:
+        return service.create(todo_list_data)
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
 
 
 @router.put("/{todo_list_id}", response_model=TodoList, status_code=status.HTTP_200_OK)
@@ -76,25 +75,20 @@ async def update(
 ) -> TodoList:
     """
     Update an existing todo list.
-
-    Args:
-        todo_list_id: The ID of the todo list to update
-        todo_list_data: New data for the todo list
-        service: Injected TodoListService instance
-
-    Returns:
-        Updated TodoList object
-
-    Raises:
-        HTTPException: 404 if todo list not found
     """
-    updated_todo_list = service.update(todo_list_id, todo_list_data)
-    if updated_todo_list is None:
+    try:
+        updated_todo_list = service.update(todo_list_id, todo_list_data)
+        if updated_todo_list is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"TodoList with id {todo_list_id} not found",
+            )
+        return updated_todo_list
+    except ValueError as e:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"TodoList with id {todo_list_id} not found",
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
         )
-    return updated_todo_list
 
 
 @router.delete("/{todo_list_id}", status_code=status.HTTP_204_NO_CONTENT)
